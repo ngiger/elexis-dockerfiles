@@ -4,13 +4,13 @@ Here you find a few dockerfiles which you might find interesting for playing aro
 
 Consult the readme.textile in each subdirectory you are intersted in. Their purpose are
 
-* elexis3factory: Simple One-Step factory for elexis-3-core and elexis-3-base without testing
-* build_elexis:  Complete (X) environment, which lets you build and run the unit test for elexis-3-core and elexis-3-base
-* elexis_test: Run the elexis-3-core + base with a demoDB, ch.elexis.base.ch.feature and some commonly used
-* jenkins: Run the Jenkins-CI with the same sets of plugins as under https://jenkins.elexis.info/jenkins/
-* mediawiki: Run a mediawiki enviroment (at the moment ahead of the actual wiki.elexis.info)
-* nginx: The nginx server needed for the mediawiki PHP5 with FPM
-* srv.elexis.info: Upcoming, my plans for using docker on srv.elexis.info (after upgrading it to jessie and making it work). A simple docker-compose.yml
+* "elexis3factory":elexis3factory: Simple One-Step factory for elexis-3-core and elexis-3-base without testing
+* "build_elexis":build_elexis:  Complete (X) environment, which lets you build and run the unit test for elexis-3-core and elexis-3-base
+* "elexis_test":elexis_test: Run the elexis-3-core + base with a demoDB, ch.elexis.base.ch.feature and some commonly used
+* "jenkins":jenkins: Run the Jenkins-CI with the same sets of plugins as under https://jenkins.elexis.info/jenkins/
+* "mediawiki":mediawiki: Run a mediawiki enviroment (at the moment ahead of the actual wiki.elexis.info)
+* "nginx":nginx: The nginx server needed for the mediawiki PHP5 with FPM
+* "srv.elexis.info":srv.elexis.info: Upcoming, my plans for using docker on srv.elexis.info (after upgrading it to jessie and making it work). A simple docker-compose.yml
 
 h2. Requirement
 
