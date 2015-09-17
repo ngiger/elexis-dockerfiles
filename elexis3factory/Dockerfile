@@ -1,3 +1,4 @@
+# See https://github.com/lburgazzoli/lb-docker/blob/master/debian-jessie-java/1.8.0_60/Dockerfile
 FROM lburgazzoli/debian-jessie-java:1.8.0_60
 MAINTAINER weirich@elexis.ch
 RUN apt-get update 

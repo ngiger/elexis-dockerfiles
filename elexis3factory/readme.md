@@ -14,7 +14,10 @@ _Note_: On Mac and Windows-Hosts, this directory must be within the User's home,
  "Note: If you are using Docker Machine on Mac or Windows, your Docker daemon only has limited access to your OS X/Windows filesystem. Docker Machine tries to auto-share your /Users (OS X) or C:\Users (Windows) directory - and so you can mount files or directories using docker run -v /Users/<path>:/<container path> ... (OS X) or docker run -v /c/Users/<path>:/<container path ... (Windows). All other paths come from your virtual machine’s filesystem."
 
 ---                                                                                                                        
-                                                                                                                                
+
+_Note_: To avoid using sudo, consider adding your username to the docker group
+
+----
 
 The factory will clone elexis-3-core, and elexis-3-base, if the respective repository doesn't exist. If it exists, it will `git pull` to update. 
 Then it creates the elexis core for all supported architectures and copies them to `/path/to/elexis/sources/dist` after successful build. The files of elexis-3-base are compiled and left in-place.

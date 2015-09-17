@@ -4,8 +4,8 @@ Here you find a few dockerfiles which you might find interesting for playing aro
 
 Consult the readme.textile in each subdirectory you are intersted in. Their purpose are
 
-* build_elexis:  Complete environment, which lets you build and run the unit test for elexis-3-core and elexis-3-base
-* elexis3factory: Simple One-Step factory for elexis-3-core and elexis-3-base without testing.
+* elexis3factory: Simple One-Step factory for elexis-3-core and elexis-3-base without testing
+* build_elexis:  Complete (X) environment, which lets you build and run the unit test for elexis-3-core and elexis-3-base
 * elexis_test: Run the elexis-3-core + base with a demoDB, ch.elexis.base.ch.feature and some commonly used
 * jenkins: Run the Jenkins-CI with the same sets of plugins as under https://jenkins.elexis.info/jenkins/
 * mediawiki: Run a mediawiki enviroment (at the moment ahead of the actual wiki.elexis.info)
@@ -57,3 +57,7 @@ h2. Contributing
 * Commit your changes
 * create a pull request
 
+h3. Contributers
+
+* Gerry Weirich <weirich@elexis.ch>  elexis3factory
+* Niklaus Giger <niklaus.giger@member.fsf.org> idea and initial work
