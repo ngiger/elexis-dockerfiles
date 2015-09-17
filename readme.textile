@@ -5,6 +5,7 @@ Here you find a few dockerfiles which you might find interesting for playing aro
 Consult the readme.textile in each subdirectory you are intersted in. Their purpose are
 
 * build_elexis:  Complete environment, which lets you build and run the unit test for elexis-3-core and elexis-3-base
+* elexis3factory: Simple One-Step factory for elexis-3-core and elexis-3-base without testing.
 * elexis_test: Run the elexis-3-core + base with a demoDB, ch.elexis.base.ch.feature and some commonly used
 * jenkins: Run the Jenkins-CI with the same sets of plugins as under https://jenkins.elexis.info/jenkins/
 * mediawiki: Run a mediawiki enviroment (at the moment ahead of the actual wiki.elexis.info)
@@ -19,7 +20,7 @@ Support for older docker version is no priority for me, but patches to support t
 
 I try to base my dockerfiles on Debian:jessie
 
-h3. Running under MacOSX
+h3. Running tests under MacOSX
 
 Searching around in the web I found via "Tim Sutton":http://kartoza.com/how-to-run-a-linux-gui-application-on-osx-using-docker/ and "Jan":http://learning-continuous-deployment.github.io/docker/images/dockerfile/2015/04/22/docker-gui-osx/ that you can run a tradition Linux X base application given:
 
@@ -31,6 +32,7 @@ Searching around in the web I found via "Tim Sutton":http://kartoza.com/how-to-r
 * You can only use directories starting /Users as docker data containers
 
 Tested with build_elexis on MacOSX 10.9 (at least 10.8 is required)
+_Note:_ These steps are not necessary for build-only without unit tests (as in elexis3factory)
 
 h3. Remove dangling docker files
 
