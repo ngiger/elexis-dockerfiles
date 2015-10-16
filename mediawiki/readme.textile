@@ -35,13 +35,32 @@ These are the environment variables needed to run mediawiki:
 - `MEDIAWIKI_DB_USER`: MySQL username to use
 - `MEDIAWIKI_DB_PASSWORD`: MySQL user password
 
-h3. Install a dump
+h3. Load/create a dump
 
-To unzip a dump run in the docker container (.eg. @docker -it name /bin/bash@) and execute their the command:
+The dumps goes into /srv/mediawiki/config, which should be mounted somewhere
 
 bc.
-bunzip2 --stdout /srv/mediawiki/config/mysql_wiki_dump_20150905-073654.sql.bz2 | mysql -u elexis -h mysql elexis_wiki
+docker exec $WIKI_CONTAINER_ID /usr/local/bin/load_mysql_dump.sh
+docker exec $WIKI_CONTAINER_ID /usr/local/bin/save_mysql_dump.sh
 
 h3. Thanks
 
 Thanks to Frank Ploss. I could use many ideas from his project under https://github.com/fqxp/dockerfiles/tree/master/mediawiki
+
+
+h2. Debugging
+
+We run everything locally here using commands, saving LocalConfig.php in assets/{version} and building with
+docker build -t wiki/{version} .
+The container is run
+docker run -rm \
+      -e MAWIKI_DB_NAME=elexis_wiki -e MEDIAWIKI_DB_USER=elexis \
+      -e MEDIAWIKI_DB_PASSWORD=elexisTest \
+      -v /home/elexis//mediawiki/config:/srv/mediawiki/images \
+      -v /home/elexis//mediawiki/config:/srv/mediawiki/images \
+      -l srvelexisinfo_wikidb_1 \
+      wiki:{version}
+
+To load the original dump run docker exec wiki:{version} /bin/bash and call
+zat /srv/mediawiki/config/mysql_wiki_dump.sql.gz | /usr/bin/mysql -u elexis -h mysql elexis_wiki
+bzcat /srv/mediawiki/config/mysql_wiki_dump_20150905-073654.sql.bz2 | /usr/bin/mysql -u elexis -h 172.17.0.166 elexis_wiki

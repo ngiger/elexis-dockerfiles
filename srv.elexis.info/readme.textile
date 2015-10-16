@@ -6,7 +6,7 @@ h2. Useage
 
 h3. Build
 
-To build it run @docker-compose.yml@
+To build it run @docker-compose build@
 
 h3. Running
 
@@ -21,10 +21,10 @@ h3. data-container / requirements
 
 The setup will only work if you have a correct dump from srv.elexis.info accessible at
 
-# /opt/docker-data-containers/wiki/mysql
-# /opt/docker-data-containers/wiki/mysql_config
-# /opt/docker-data-containers/mediawiki/config
-# /opt/docker-data-containers/mediawiki/images
-# /opt/docker-data-containers/nginx/certs
-# /opt/docker-data-containers/jenkins
+# /home/docker-data-containers/wiki/mysql
+# /home/docker-data-containers/wiki/mysql_config
+# /home/docker-data-containers/mediawiki/config
+# /home/docker-data-containers/mediawiki/images
+# /home/docker-data-containers/nginx/certs
+# /home/docker-data-containers/jenkins
 

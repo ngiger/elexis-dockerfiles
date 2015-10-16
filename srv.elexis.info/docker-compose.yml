@@ -1,4 +1,4 @@
-# https://hub.docker.com/_/mysql/
+# https:/hub.docker.com/_/mysql/
 # to run a mysql shell inside the container
 # docker exec -it name_of_container /bin/mysql
 # access via mysql client
@@ -9,11 +9,13 @@ wikidb:
   environment:
     MYSQL_ROOT_PASSWORD: foo
   volumes:
-    - /opt/docker-data-containers/wiki/mysql:/var/lib/mysql
-    - /opt/docker-data-containers/wiki/mysql_config:/etc/mysql/conf.d
+    - /home/docker-data-containers/wiki/mysql:/var/lib/mysql
+    - /home/docker-data-containers/wiki/mysql_config:/etc/mysql/conf.d
+# Before being able to use the database I must call first grant all on elexis_wiki.* to elexis@'%'; as user root here
 
-
-# based on https://github.com/fqxp/dockerfiles/tree/master/mediawiki, but using jessie instead of wheezy
+# based on https:/github.com/fqxp/dockerfiles/tree/master/mediawiki, but using jessie instead of wheezy
+# we should wait for th mysql to be up. A proposal can be found here:
+# http:/brunorocha.org/python/dealing-with-linked-containers-dependency-in-docker-compose.html
 wiki:
   build: ../mediawiki
   environment:
@@ -21,12 +23,12 @@ wiki:
     MEDIAWIKI_DB_USER:  elexis
     MEDIAWIKI_DB_PASSWORD: elexisTest
   volumes:
-    - /opt/docker-data-containers/mediawiki/config:/srv/mediawiki/config
-    - /opt/docker-data-containers/mediawiki/images:/srv/mediawiki/images
+    - /home/docker-data-containers/mediawiki/config:/srv/mediawiki/config
+    - /home/docker-data-containers/mediawiki/images:/srv/mediawiki/images
   links:
     - wikidb:mysql
   ports:
-    - "8082:80"
+    - "80:80"
 
 # Differences compared to a mediawiki from Debian:
 # mysl: dbPassword is empty, dbHost is no longer localhost but mysql (a different container)
@@ -40,22 +42,22 @@ nginx:
   build: ../nginx
   environment:
   ports:
-    - "8081:80"
-    - "8443:443"
-  volumes:
-    - /opt/docker-data-containers/nginx/certs:/etc/nginx/certs
+    - "80:80"
+    - "443:443"
+#  volumes:
+#    - /home/docker-data-containers/nginx/certs:/etc/nginx/certs
 #  links:
 #    - jenkins
 #    - wiki
 
-jenkins:
-  build: ../jenkins
-  environment:
-    JAVA_OPTS: "-Djava.awt.headless=true"
-  ports:
-    - "50000:50000"
-    - "8083:8080"
-  volumes:
-    - /opt/docker-data-containers/jenkins:/var/jenkins_home
+#jenkins:
+#  build: ../jenkins
+#  environment:
+#    JAVA_OPTS: "-Djava.awt.headless=true"
+#  ports:
+#    - "50000:50000"
+#    - "8083:8080"
+#  volumes:
+#    - /home/docker-data-containers/jenkins:/var/jenkins_home
 
 
