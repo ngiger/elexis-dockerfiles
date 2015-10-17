@@ -28,7 +28,7 @@ wiki:
   links:
     - wikidb:mysql
   ports:
-    - "80:80"
+    - "8888:80"
 
 # Differences compared to a mediawiki from Debian:
 # mysl: dbPassword is empty, dbHost is no longer localhost but mysql (a different container)
@@ -38,12 +38,13 @@ wiki:
 # - check the release notes
 # TODO: should we use a mysql database dump to initialize the database?
 
-nginx:
-  build: ../nginx
-  environment:
-  ports:
-    - "80:80"
-    - "443:443"
+#nginx:
+#  build: ../nginx
+#  environment:
+#  ports:
+#    - "8888:80"
+#    #- "80:8888"
+#    - "8443:443"
 #  volumes:
 #    - /home/docker-data-containers/nginx/certs:/etc/nginx/certs
 #  links:
