@@ -28,7 +28,7 @@ $wgScriptPath       = "wiki";
 $wgScriptExtension  = ".php";
 
 ## The protocol and server name to use in fully-qualified URLs
-$wgServer           = "http://wiki.elexis.info:8888";
+$wgServer           = "http://wiki.elexis.info";
 
 ## The relative URL path to the skins directory
 $wgStylePath        = "$wgScriptPath/skins";
@@ -43,8 +43,8 @@ $wgLogo             = "/config/elexis_135.png";
 $wgEnableEmail      = true;
 $wgEnableUserEmail  = true; # UPO
 
-$wgEmergencyContact = "apache@localhost:8080";
-$WGPasswordSender   = "apache@localhost:8080";
+$wgEmergencyContact = "apache@localhost:8888";
+$WGPasswordSender   = "apache@localhost:8888";
 
 $wgEnotifUserTalk      = false; # UPO
 $wgEnotifWatchlist     = false; # UPO

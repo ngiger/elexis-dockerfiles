@@ -8,14 +8,24 @@ h3. Build
 
 To build it run @docker-compose build@
 
+Before being able to use the database you must first ensure that mysql may be accessed
+via other hosts. Therefore open a bash shell using @docker exec -it srvelexisinfo_wikidb_1 /bin/bash@. There call
+@mysql -u root -pfoo@ and execute @grant all on elexis_wiki.* to elexis@'%';@.
+
+Also I used the following statements to copy the old mysql and mediawiki images into the new destination
+
+bc.sudo cp -prvu /var/lib/mediawiki/images /home/var/lib/mediawiki
+sudo mkdir /home/var/lib/mediawiki/config
+sudo rsync -rv /var/lib/mysql/ /home/docker-data-containers/wiki/mysql
+
 h3. Running
 
 To start all services (in detached mode) use @docker-compose up -d@.
 
 The web servers can be accessed like this:
 
-* Jenkins: https://localhost:8088
-* MediaWiki: https://localhost:8080
+* MediaWiki: https://localhost:8888
+
 
 h3. data-container / requirements
 
