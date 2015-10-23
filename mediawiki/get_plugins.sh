@@ -1,4 +1,5 @@
 #!/bin/bash -v
+mkdir -p downloaded_extensions
 wget -P downloaded_extensions https://extdist.wmflabs.org/dist/extensions/BlockAndNuke-REL1_25-f01f9b7.tar.gz
 wget -P downloaded_extensions https://extdist.wmflabs.org/dist/extensions/Collection-REL1_25-d898236.tar.gz
 wget -P downloaded_extensions https://extdist.wmflabs.org/dist/extensions/ConfirmEdit-REL1_25-48cc81c.tar.gz
