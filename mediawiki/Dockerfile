@@ -24,7 +24,7 @@ RUN mkdir -p /srv/mediawiki/downloaded_extensions
 # The next steps also unpacks all tar.gz files!
 ADD downloaded_extensions/* /srv/mediawiki/extensions/
 
-RUN apt-get install -y acl sudo
+RUN apt-get install -y acl sudo ssmtp bsd-mailx
 
 ADD site.conf /etc/nginx/sites-enabled/default
 ADD assets/start_mediawiki /usr/local/bin/start_mediawiki
@@ -37,12 +37,18 @@ volume /srv/mediawiki/config
 volume /srv/www
 ADD assets/save_mysql_dump.sh /usr/local/bin/save_mysql_dump.sh
 ADD assets/load_mysql_dump.sh /usr/local/bin/load_mysql_dump.sh
+
+ADD ssmtp.conf /etc/ssmtp/ssmtp.conf
+ADD php-smtp.ini /usr/local/etc/php/conf.d/php-smtp.ini
+
 expose 80
 env HOME=/root
 
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log
 RUN ln -sf /dev/stderr /var/log/nginx/error.log
+
+expose 25
 
 entrypoint ["/usr/local/bin/start_mediawiki"]
 cmd ["/usr/bin/supervisord", "--nodaemon"]
