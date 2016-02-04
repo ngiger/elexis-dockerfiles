@@ -24,6 +24,11 @@ EOF
 
 fi
 
+echo "# created via elexis-dockerfiles/mediawiki/assets/start_mediawiki"  > /etc/ssmtp/ssmtp.conf
+echo "mailhub=${HOSTNAME}" >> /etc/ssmtp/ssmtp.conf
+echo "rewriteDomain=${DOMAINNAME}" >> /etc/ssmtp/ssmtp.conf
+echo "FromLineOverride=Yes" >> /etc/ssmtp/ssmtp.conf
+
 cd /srv/mediawiki
 # if [ test -f config/LocalSettings.php ]
 # then

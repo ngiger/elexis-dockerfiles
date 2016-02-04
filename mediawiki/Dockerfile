@@ -27,28 +27,20 @@ ADD downloaded_extensions/* /srv/mediawiki/extensions/
 RUN apt-get install -y acl sudo ssmtp bsd-mailx
 
 ADD site.conf /etc/nginx/sites-enabled/default
-ADD assets/start_mediawiki /usr/local/bin/start_mediawiki
 RUN echo 'cgi.fix_pathinfo=0' >>/etc/php5/fpm/php.ini
 ADD supervisor.conf /etc/supervisor/conf.d/nginx.conf
 ADD ./fpm.conf /etc/php5/fpm/php-fpm.conf
 ADD ./fpm-pool-www.conf /etc/php5/fpm/pool.d/www.conf
-volume /srv/mediawiki/images
-volume /srv/mediawiki/config
-volume /srv/www
-ADD assets/save_mysql_dump.sh /usr/local/bin/save_mysql_dump.sh
-ADD assets/load_mysql_dump.sh /usr/local/bin/load_mysql_dump.sh
-
-ADD ssmtp.conf /etc/ssmtp/ssmtp.conf
+volume [ /srv/mediawiki/images, /srv/mediawiki/config, /srv/www]
+ADD assets/start_mediawiki assets/save_mysql_dump.sh assets/load_mysql_dump.sh /usr/local/bin/
 ADD php-smtp.ini /usr/local/etc/php/conf.d/php-smtp.ini
 
 expose 80
+expose 25
 env HOME=/root
 
 # forward request and error logs to docker log collector
-RUN ln -sf /dev/stdout /var/log/nginx/access.log
-RUN ln -sf /dev/stderr /var/log/nginx/error.log
-
-expose 25
+RUN ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/stderr /var/log/nginx/error.log
 
 entrypoint ["/usr/local/bin/start_mediawiki"]
 cmd ["/usr/bin/supervisord", "--nodaemon"]
