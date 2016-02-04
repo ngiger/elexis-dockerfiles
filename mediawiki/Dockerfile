@@ -24,14 +24,16 @@ RUN mkdir -p /srv/mediawiki/downloaded_extensions
 # The next steps also unpacks all tar.gz files!
 ADD downloaded_extensions/* /srv/mediawiki/extensions/
 
-RUN apt-get install -y acl sudo ssmtp bsd-mailx
+RUN apt-get update && apt-get install -y acl sudo ssmtp bsd-mailx
 
 ADD site.conf /etc/nginx/sites-enabled/default
 RUN echo 'cgi.fix_pathinfo=0' >>/etc/php5/fpm/php.ini
 ADD supervisor.conf /etc/supervisor/conf.d/nginx.conf
 ADD ./fpm.conf /etc/php5/fpm/php-fpm.conf
 ADD ./fpm-pool-www.conf /etc/php5/fpm/pool.d/www.conf
-volume [ /srv/mediawiki/images, /srv/mediawiki/config, /srv/www]
+volume  /srv/mediawiki/images
+volume /srv/mediawiki/config
+volume /srv/www
 ADD assets/start_mediawiki assets/save_mysql_dump.sh assets/load_mysql_dump.sh /usr/local/bin/
 ADD php-smtp.ini /usr/local/etc/php/conf.d/php-smtp.ini
 

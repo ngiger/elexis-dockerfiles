@@ -25,8 +25,8 @@ EOF
 fi
 
 echo "# created via elexis-dockerfiles/mediawiki/assets/start_mediawiki"  > /etc/ssmtp/ssmtp.conf
-echo "mailhub=${HOSTNAME}" >> /etc/ssmtp/ssmtp.conf
-echo "rewriteDomain=${DOMAINNAME}" >> /etc/ssmtp/ssmtp.conf
+echo "mailhub=172.17.0.1" >> /etc/ssmtp/ssmtp.conf
+echo "rewriteDomain=srv.elexis.info" >> /etc/ssmtp/ssmtp.conf
 echo "FromLineOverride=Yes" >> /etc/ssmtp/ssmtp.conf
 
 cd /srv/mediawiki
