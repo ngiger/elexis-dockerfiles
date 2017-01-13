@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Terminal=false
+Icon=elexis-logo
+Name=Elexis Pre-Release mit Demo-Datenbank
+Exec=/opt/elexis/Elexis3 -clean
+Categories=MedicalSoftware;Office

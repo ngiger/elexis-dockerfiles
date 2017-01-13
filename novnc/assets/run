@@ -1,0 +1,12 @@
+#!/bin/bash
+# set -e
+cd $HOME/elexis
+if [ test -d demoDB ]
+then
+  echo demoDB schon vorhanden
+else
+  rm -rf demoDB
+  unzip /opt/elexis/demoDB.zip
+  echo Unzipped /opt/elexis/demoDB.zip
+fi
+exec /opt/elexis/Elexis3 -clean

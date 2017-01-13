@@ -1,0 +1,9 @@
+server {
+
+  server_name testbed-elexis.dyndns.org;
+  listen 80;
+
+  location /.well-known/acme-challenge {
+    alias /var/www/letsencrypt;
+  }
+}

@@ -1,0 +1,65 @@
+# docker-elexis-nvnc
+version: '2.0'
+services:
+  demoa:
+    build: .
+    # docker run -p 6081:6080  -e VNCPASS=elexis -h  demo1.testbed-elexis.dyndns.org docker-eclipse-novnc
+    environment:
+      VNCPASS:  elexis
+      PEMFILE:  self1.pem
+    domainname: testbed-elexis.dyndns.org
+    hostname: demo1
+    ports:
+      - "6081:6080"
+
+
+  demob:
+    build: .
+    # docker run -p 6082:6080  -e VNCPASS=elexis -h  demo2.testbed-elexis.dyndns.org docker-eclipse-novnc
+    environment:
+      VNCPASS:  elexis
+      PEMFILE:  self2.pem
+    domainname: testbed-elexis.dyndns.org
+    hostname: demo2
+    ports:
+      - "6082:6080"
+
+
+  democ:
+    build: .
+    # docker run -p 6083:6080  -e VNCPASS=elexis -h  demo3.testbed-elexis.dyndns.org docker-eclipse-novnc
+    environment:
+      VNCPASS:  elexis
+      PEMFILE:  self3.pem
+    domainname: testbed-elexis.dyndns.org
+    hostname: demo3
+    ports:
+      - "6083:6080"
+
+
+  demod:
+    build: .
+    # docker run -p 6084:6080  -e VNCPASS=elexis -h  demo4.testbed-elexis.dyndns.org docker-eclipse-novnc
+    environment:
+      VNCPASS:  elexis
+      PEMFILE:  self4.pem
+    domainname: testbed-elexis.dyndns.org
+    hostname: demo4
+    ports:
+      - "6084:6080"
+
+
+  demoe:
+    build: .
+    # docker run -p 6085:6080  -e VNCPASS=elexis -h  demo5.testbed-elexis.dyndns.org docker-eclipse-novnc
+    environment:
+      VNCPASS:  elexis
+      PEMFILE:  self5.pem
+    domainname: testbed-elexis.dyndns.org
+    hostname: demo5
+    ports:
+      - "6085:6080"
+networks:
+  public:
+  private:
+

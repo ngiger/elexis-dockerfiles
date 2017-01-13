@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Terminal=false
+Icon=medelexis-logo
+Name=Medelexis 3.1 (Pre-Release) mit DemoDB
+Exec=/opt/medelexis/Medelexis -clean
+Categories=MedicalSoftware;Office
