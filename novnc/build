@@ -19,9 +19,13 @@ fi
 # openssl req -batch -new -x509 -days 365 -nodes -out noVNC/self.pem -keyout noVNC/self.pem -/CN=$FQDN
 for INDEX in 1 2 3 4 5
 do
-  cmd="openssl req -batch -new -x509 -subj /CN=demo$INDEX.testbed-elexis.dyndns.org -days 365 -nodes -out noVNC/self$INDEX.pem -keyout noVNC/self$INDEX.pem"
-  echo cmd is $cmd
-  eval $cmd
+  PEMFILE=noVNC/self$INDEX.pem
+  if [ ! -f $PEMFILE ]
+  then
+    cmd="openssl req -batch -new -x509 -subj /CN=demo$INDEX.testbed-elexis.dyndns.org -days 365 -nodes -out $PEMFILE -keyout $PEMFILE"
+    echo cmd is $cmd
+    eval $cmd
+  fi
 done
 
 docker build -t docker-eclipse-novnc .
