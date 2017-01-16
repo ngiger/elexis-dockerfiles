@@ -71,7 +71,12 @@ Server disconnected (code: 1000, reason: Target closed)
 http://demo.testbed-elexis.dyndns.org:6085/vnc_auto.html
 
 Installed `dcsg: A systemd service generator for docker-compose` from https://github.com/andreaskoch/dcsg.
-Ran `./dcsg_linux_amd64 install `inside /opt/src/docker-elexis-novnc
+Ran `./dcsg_linux_amd64 install `inside /opt/src/elexis-dockerfiles/novnc
+
+Added crontab entry to restart at 3 AM each day
+  # m h  dom mon dow   command
+    0 2  *  *    *     /bin/systemctl restart novnc
+
 
 TODO: Encrypted noVNC Sessions
 ------------------------------
@@ -110,6 +115,7 @@ To add scripts to run at startup, add them to this folder, with a ```.sh``` exte
 To add supervisord configs, add them to this folder:
 ```
 /etc/supervisor/conf.d/
+
 ```
 
 ## TODO:
