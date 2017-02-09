@@ -1,6 +1,6 @@
-h1. A Debian(Jessie)-based mediawiki Docker container
+# A Debian(Jessie)-based mediawiki Docker container
 
-h2. Setup
+## Setup
 
 Create directories for configuration and images (if you want to enable uploads)
 and make the images directory writable for the nginx image, e.g. like this:
@@ -10,7 +10,7 @@ and make the images directory writable for the nginx image, e.g. like this:
 
 In the dockerfile I specified some extension I use for wiki.elexis.info.
 
-h2. Running mediawiki
+## Running mediawiki
 
 Run the image like this:
 
@@ -27,7 +27,7 @@ MediaWiki at `http://localhost:8080/mw-config/index.php`
 
 Page URLs will have the form `http://localhost:8080/w/Page_Name`.
 
-h3. Environment variables
+### Environment variables
 
 These are the environment variables needed to run mediawiki:
 
@@ -35,25 +35,25 @@ These are the environment variables needed to run mediawiki:
 - `MEDIAWIKI_DB_USER`: MySQL username to use
 - `MEDIAWIKI_DB_PASSWORD`: MySQL user password
 
-h3. Load/create a dump
+### Load/create a dump
 
 The dumps goes into /srv/mediawiki/config, which should be mounted somewhere
 
-bc.
-docker exec $WIKI_CONTAINER_ID /usr/local/bin/load_mysql_dump.sh
-docker exec $WIKI_CONTAINER_ID /usr/local/bin/save_mysql_dump.sh
+    docker exec $WIKI_CONTAINER_ID /usr/local/bin/load_mysql_dump.sh
+    docker exec $WIKI_CONTAINER_ID /usr/local/bin/save_mysql_dump.sh
 
-h3. Thanks
+### Thanks
 
 Thanks to Frank Ploss. I could use many ideas from his project under https://github.com/fqxp/dockerfiles/tree/master/mediawiki
 
 
-h2. Debugging
+## Debugging
 
 We run everything locally here using commands, saving LocalConfig.php in assets/{version} and building with
 docker build -t wiki/{version} .
 The container is run
-docker run -rm \
+
+    docker run -rm \
       -e MAWIKI_DB_NAME=elexis_wiki -e MEDIAWIKI_DB_USER=elexis \
       -e MEDIAWIKI_DB_PASSWORD=elexisTest \
       -v /home/elexis//mediawiki/config:/srv/mediawiki/images \
@@ -62,5 +62,6 @@ docker run -rm \
       wiki:{version}
 
 To load the original dump run docker exec wiki:{version} /bin/bash and call
-zat /srv/mediawiki/config/mysql_wiki_dump.sql.gz | /usr/bin/mysql -u elexis -h mysql elexis_wiki
-bzcat /srv/mediawiki/config/mysql_wiki_dump_20150905-073654.sql.bz2 | /usr/bin/mysql -u elexis -h 172.17.0.166 elexis_wiki
+
+    zat /srv/mediawiki/config/mysql_wiki_dump.sql.gz | /usr/bin/mysql -u elexis -h mysql elexis_wiki
+    bzcat /srv/mediawiki/config/mysql_wiki_dump_20150905-073654.sql.bz2 | /usr/bin/mysql -u elexis -h 172.17.0.166 elexis_wiki
