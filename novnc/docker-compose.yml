@@ -71,3 +71,14 @@ services:
     ports:
       - "6183:6080"
 
+  demo_fr_ch_a:
+    build: .
+    environment:
+      VNCPASS:  elexis
+      PEMFILE:  self1.pem
+      NL: it_CH
+    domainname: testbed-elexis.dyndns.org
+    hostname: demo_fr_ch_a
+    ports:
+      - "6281:6080"
+
