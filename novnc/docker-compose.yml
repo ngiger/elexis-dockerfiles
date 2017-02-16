@@ -1,65 +1,73 @@
 # docker-elexis-nvnc
 version: '2.0'
 services:
-  demoa:
+  demo_de_ch_a:
     build: .
-    # docker run -p 6081:6080  -e VNCPASS=elexis -h  demo1.testbed-elexis.dyndns.org docker-eclipse-novnc
     environment:
       VNCPASS:  elexis
       PEMFILE:  self1.pem
+      NL: de_CH
     domainname: testbed-elexis.dyndns.org
-    hostname: demo1
+    hostname: demo_de_ch_a
     ports:
       - "6081:6080"
 
 
-  demob:
+  demo_de_ch_b:
     build: .
-    # docker run -p 6082:6080  -e VNCPASS=elexis -h  demo2.testbed-elexis.dyndns.org docker-eclipse-novnc
     environment:
       VNCPASS:  elexis
       PEMFILE:  self2.pem
+      NL: de_CH
     domainname: testbed-elexis.dyndns.org
-    hostname: demo2
+    hostname: demo_de_ch_c
     ports:
       - "6082:6080"
 
 
-  democ:
+  demo_de_ch_c:
     build: .
-    # docker run -p 6083:6080  -e VNCPASS=elexis -h  demo3.testbed-elexis.dyndns.org docker-eclipse-novnc
     environment:
       VNCPASS:  elexis
       PEMFILE:  self3.pem
+      NL: de_CH
     domainname: testbed-elexis.dyndns.org
-    hostname: demo3
+    hostname: demo_de_ch_a
     ports:
       - "6083:6080"
 
-
-  demod:
+  demo_it_ch_a:
     build: .
-    # docker run -p 6084:6080  -e VNCPASS=elexis -h  demo4.testbed-elexis.dyndns.org docker-eclipse-novnc
     environment:
       VNCPASS:  elexis
-      PEMFILE:  self4.pem
+      PEMFILE:  self1.pem
+      NL: it_CH
     domainname: testbed-elexis.dyndns.org
-    hostname: demo4
+    hostname: demo_it_ch_a
     ports:
-      - "6084:6080"
+      - "6181:6080"
 
 
-  demoe:
+  demo_it_ch_b:
     build: .
-    # docker run -p 6085:6080  -e VNCPASS=elexis -h  demo5.testbed-elexis.dyndns.org docker-eclipse-novnc
     environment:
       VNCPASS:  elexis
-      PEMFILE:  self5.pem
+      PEMFILE:  self2.pem
+      NL: it_CH
     domainname: testbed-elexis.dyndns.org
-    hostname: demo5
+    hostname: demo_it_ch_c
     ports:
-      - "6085:6080"
-networks:
-  public:
-  private:
+      - "6182:6080"
+
+
+  demo_it_ch_c:
+    build: .
+    environment:
+      VNCPASS:  elexis
+      PEMFILE:  self3.pem
+      NL: it_CH
+    domainname: testbed-elexis.dyndns.org
+    hostname: demo_it_ch_a
+    ports:
+      - "6183:6080"
 

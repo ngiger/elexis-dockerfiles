@@ -9,4 +9,8 @@ else
   unzip /opt/elexis/demoDB.zip
   echo Unzipped /opt/elexis/demoDB.zip
 fi
-exec /opt/elexis/Elexis3 -clean
+if [ -z "$NL" ]
+then
+  export NL=de_CH
+fi
+exec /opt/elexis/Elexis3 -clean -nl $NL

@@ -80,37 +80,6 @@ RUN mkdir /home/root/.vnc
 RUN x11vnc -storepasswd foobar /home/root/.vnc/passwd
 ADD xorg.conf /etc/X11/xorg.conf
 
-# Add Elexis DemoDB
-
-RUN mkdir -p /opt/elexis && \
-    echo 'Installing demoDB' && \
-    cd       /opt/elexis && \
-    wget --quiet http://download.elexis.info/demoDB/demoDB_3.0_with_administrator.zip -O demoDB.zip
-
-RUN cd /usr/local/bin && \
-  wget --quiet http://ftp.fau.de/eclipse/tools/buckminster/products/director_latest.zip && \
-  unzip -q director_latest.zip
-
-# Add Elexis 3.1 prerelease
-RUN wget --quiet -q --no-check-certificate -O /tmp/elexis.zip https://srv.elexis.info/jenkins/view/3.0/job/Elexis-3.0-Core/lastSuccessfulBuild/artifact/ch.elexis.core.p2site/target/products/ch.elexis.core.application.ElexisApp-linux.gtk.x86_64.zip
-RUN  cd       /opt/elexis &&  echo 'Installing elexis' && unzip -uq /tmp/elexis.zip && rm /tmp/elexis.zip
-RUN sudo -u ubuntu sh -c "mkdir -v /home/ubuntu/elexis && cd /home/ubuntu/elexis && unzip -uq /opt/elexis/demo*.zip && ls -laRrt /home/ubuntu/elexis"
-
-RUN /usr/local/bin/director/director \
-  -destination /opt/elexis \
-  -repository http://download.elexis.info/elexis.3.core/prerelease/ \
-  -repository http://download.elexis.info/elexis.3.base/prerelease/ \
-  -application org.eclipse.equinox.p2.director \
-  -installIU ch.elexis.base.ch.feature.feature.group \
-  -installIU org.iatrix.feature.feature.group \
-  -installIU ch.elexis.omnivore.feature.feature.group \
-  -installIU ch.elexis.base.ch.legacy.feature.feature.group \
-  -installIU com.hilotec.elexis.opendocument.feature.feature.group \
-  -installIU com.hilotec.elexis.kgview.feature.feature.group \
-  -installIU com.hilotec.elexis.messwerte.v2.feature.feature.group \
-  -installIU ch.elexis.agenda.feature.feature.group \
-  -installIU ch.medelexis.text.templator.feature.feature.group
-
 # noVNC
 ENTRYPOINT ["/startup.sh"]
 ADD startup.sh /
@@ -120,5 +89,47 @@ ADD assets/*.png /usr/share/icons/
 ADD assets/*.desktop /usr/share/applications/
 
 ADD noVNC /noVNC/
+
+# Add Elexis DemoDB
+
+RUN mkdir -p /opt/elexis && \
+    echo 'Installing demoDB' && \
+    cd       /opt/elexis && \
+    wget --quiet http://download.elexis.info/demoDB/demoDB_3.0_with_administrator.zip -O demoDB.zip
+
+RUN cd /usr/local/bin && \
+  wget --quiet http://ftp.fau.de/eclipse/tools/buckminster/products/director_latest.zip && \
+  unzip -q -d /usr/local/bin /usr/local/bin/director_latest.zip
+
+# Add Elexis 3.1 prerelease from i18n
+# outout of git ls-remote --heads https://github.com/ngiger/elexis-3-core refs/heads/i18n|cut -f1
+RUN echo "head core is 5f4c41c37406a952ebf27172f6c912ef6534d33c" && \
+    echo "head base is 76b9ee33be57a4b8ca58bdd1d6d9f36e83361ad0"
+
+RUN mkdir -p /opt/downloads && \
+    wget --quiet -q --no-check-certificate -O /opt/downloads/elexis-app.zip \
+      https://srv.elexis.info/jenkins/view/3.0/job/Elexis-3.0-Core-ngiger/lastSuccessfulBuild/artifact/ch.elexis.core.p2site/target/products/ch.elexis.core.application.ElexisApp-linux.gtk.x86_64.zip && \
+    wget --quiet -q --no-check-certificate -O /opt/downloads/elexis-base.zip \
+      https://srv.elexis.info/jenkins/view/3.0/job/Elexis-3.0-Base-ngiger/lastSuccessfulBuild/artifact/ch.elexis.base.p2site/target/repository/*zip*/repository.zip
+
+RUN mkdir -p /opt/downloads/elexis-base  && \
+  unzip -q -d /opt/downloads/elexis-base /opt/downloads/elexis-base.zip
+
+RUN unzip -q -d /opt/elexis /opt/downloads/elexis-app.zip && \
+  unzip -qu -d /home/ubuntu/elexis /opt/elexis/demo*.zip  && \
+  chown -R ubuntu:ubuntu /home/ubuntu && \
+  /usr/local/bin/director/director \
+    -destination /opt/elexis \
+    -repository file:///opt/downloads/elexis-base/repository \
+    -application org.eclipse.equinox.p2.director \
+    -installIU ch.elexis.base.ch.feature.feature.group \
+    -installIU org.iatrix.feature.feature.group \
+    -installIU ch.elexis.omnivore.feature.feature.group \
+    -installIU ch.elexis.base.ch.legacy.feature.feature.group \
+    -installIU com.hilotec.elexis.opendocument.feature.feature.group \
+    -installIU com.hilotec.elexis.kgview.feature.feature.group \
+    -installIU com.hilotec.elexis.messwerte.v2.feature.feature.group \
+    -installIU ch.elexis.agenda.feature.feature.group \
+    -installIU ch.medelexis.text.templator.feature.feature.group
 
 
