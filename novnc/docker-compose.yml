@@ -7,7 +7,7 @@ services:
       VNCPASS:  elexis
       PEMFILE:  self1.pem
       NL: de_CH
-    domainname: testbed-elexis.dyndns.org
+    domainname: services.elexis.info
     hostname: demo_de_ch_a
     ports:
       - "6081:6080"
@@ -17,9 +17,9 @@ services:
     build: .
     environment:
       VNCPASS:  elexis
-      PEMFILE:  self2.pem
+      PEMFILE:  self1.pem
       NL: de_CH
-    domainname: testbed-elexis.dyndns.org
+    domainname: services.elexis.info
     hostname: demo_de_ch_c
     ports:
       - "6082:6080"
@@ -29,9 +29,9 @@ services:
     build: .
     environment:
       VNCPASS:  elexis
-      PEMFILE:  self3.pem
+      PEMFILE:  self1.pem
       NL: de_CH
-    domainname: testbed-elexis.dyndns.org
+    domainname: services.elexis.info
     hostname: demo_de_ch_a
     ports:
       - "6083:6080"
@@ -42,7 +42,7 @@ services:
       VNCPASS:  elexis
       PEMFILE:  self1.pem
       NL: it_CH
-    domainname: testbed-elexis.dyndns.org
+    domainname: services.elexis.info
     hostname: demo_it_ch_a
     ports:
       - "6181:6080"
@@ -52,9 +52,9 @@ services:
     build: .
     environment:
       VNCPASS:  elexis
-      PEMFILE:  self2.pem
+      PEMFILE:  self1.pem
       NL: it_CH
-    domainname: testbed-elexis.dyndns.org
+    domainname: services.elexis.info
     hostname: demo_it_ch_c
     ports:
       - "6182:6080"
@@ -64,9 +64,9 @@ services:
     build: .
     environment:
       VNCPASS:  elexis
-      PEMFILE:  self3.pem
+      PEMFILE:  self1.pem
       NL: it_CH
-    domainname: testbed-elexis.dyndns.org
+    domainname: services.elexis.info
     hostname: demo_it_ch_a
     ports:
       - "6183:6080"
@@ -76,9 +76,33 @@ services:
     environment:
       VNCPASS:  elexis
       PEMFILE:  self1.pem
-      NL: it_CH
-    domainname: testbed-elexis.dyndns.org
+      NL: fr_CH
+    domainname: services.elexis.info
     hostname: demo_fr_ch_a
     ports:
       - "6281:6080"
+
+
+  demo_fr_ch_b:
+    build: .
+    environment:
+      VNCPASS:  elexis
+      PEMFILE:  self1.pem
+      NL: fr_CH
+    domainname: services.elexis.info
+    hostname: demo_fr_ch_c
+    ports:
+      - "6282:6080"
+
+
+  demo_fr_ch_c:
+    build: .
+    environment:
+      VNCPASS:  elexis
+      PEMFILE:  self1.pem
+      NL: fr_CH
+    domainname: services.elexis.info
+    hostname: demo_fr_ch_a
+    ports:
+      - "6283:6080"
 

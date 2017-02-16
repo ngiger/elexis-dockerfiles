@@ -15,18 +15,22 @@ deb http://security.ubuntu.com/ubuntu trusty-security main restricted universe m
 # https://github.com/dotcloud/docker/issues/1724#issuecomment-26294856
 RUN apt-mark hold initscripts udev plymouth mountall
 RUN dpkg-divert --local --rename --add /sbin/initctl && ln -sf /bin/true /sbin/initctl
-RUN apt-get update \
-    && apt-get upgrade -y
+RUN apt-get update && apt-get install -y software-properties-common wget
+RUN add-apt-repository ppa:openjdk-r/ppa -y
+RUN apt-get update && apt-get upgrade -y
 
-RUN apt-get install -y python-numpy
-RUN apt-get install -y software-properties-common wget
-RUN apt-get install -y --force-yes --no-install-recommends supervisor \
+RUN apt-get install -y --force-yes --no-install-recommends \
+    python-numpy openjdk-8-jdk  software-properties-common wget supervisor \
         openssh-server pwgen sudo vim-tiny \
         net-tools unzip \
         lxde x11vnc xvfb \
         gtk2-engines-murrine ttf-ubuntu-font-family \
         libreoffice firefox \
-        xserver-xorg-video-dummy \
+        xserver-xorg-video-dummy desktop-file-utils eclipse
+
+RUN locale-gen it_CH.UTF-8 && \
+    locale-gen fr_CH.UTF-8 && \
+    locale-gen de_CH.UTF-8 \
     && apt-get autoclean \
     && apt-get autoremove \
     && rm -rf /var/lib/apt/lists/*
@@ -37,12 +41,6 @@ RUN chmod +x /etc/startup.aux/00.sh
 RUN mkdir -p /etc/supervisor/conf.d
 RUN rm /etc/supervisor/supervisord.conf
 
-# create an ubuntu user
-#PASS=`pwgen -c -n -1 10`
-#PASS=ubuntu
-#echo "User: ubuntu Pass: $PASS"
-#RUN useradd --create-home --shell /bin/bash --user-group --groups adm,sudo ubuntu
-
 # create an ubuntu user who cannot sudo
 RUN useradd --create-home --shell /bin/bash --user-group ubuntu
 RUN echo "ubuntu:badpassword" | chpasswd
@@ -52,32 +50,17 @@ EXPOSE 5900
 EXPOSE 22
 
 ADD openbox-config /openbox-config
-RUN cp -r /openbox-config/.config ~ubuntu/
-RUN chown -R ubuntu ~ubuntu/.config ; chgrp -R ubuntu ~ubuntu/.config
-RUN rm -r /openbox-config
+RUN cp -r /openbox-config/.config ~ubuntu/ \
+    && chown -R ubuntu ~ubuntu/.config ; chgrp -R ubuntu ~ubuntu/.config \
+    && rm -r /openbox-config \
+    && update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
 
 WORKDIR /
 
-############ being Eclipse stuff ###############
-# java install
-RUN add-apt-repository ppa:webupd8team/java
-RUN apt-get update
-# say yes to the oracle license agreement
-RUN echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
-RUN echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections
-#
-RUN apt-get install -y --force-yes oracle-java8-installer
-RUN apt-get install -y --force-yes oracle-java8-set-default
-#
-# eclipse IDE
-RUN apt-get install -y desktop-file-utils
-RUN apt-get install -y eclipse
-############ end Eclipse stuff ###############
-
 # store a password for the VNC service
-RUN mkdir /home/root
-RUN mkdir /home/root/.vnc
-RUN x11vnc -storepasswd foobar /home/root/.vnc/passwd
+RUN mkdir /home/root \
+    && mkdir /home/root/.vnc \
+    && x11vnc -storepasswd foobar /home/root/.vnc/passwd
 ADD xorg.conf /etc/X11/xorg.conf
 
 # noVNC
@@ -112,13 +95,12 @@ RUN mkdir -p /opt/downloads && \
     wget --quiet -q --no-check-certificate -O /opt/downloads/elexis-base.zip \
       https://srv.elexis.info/jenkins/view/3.0/job/Elexis-3.0-Base-ngiger/lastSuccessfulBuild/artifact/ch.elexis.base.p2site/target/repository/*zip*/repository.zip
 
-RUN mkdir -p /opt/downloads/elexis-base  && \
-  unzip -q -d /opt/downloads/elexis-base /opt/downloads/elexis-base.zip
-
-RUN unzip -q -d /opt/elexis /opt/downloads/elexis-app.zip && \
-  unzip -qu -d /home/ubuntu/elexis /opt/elexis/demo*.zip  && \
-  chown -R ubuntu:ubuntu /home/ubuntu && \
-  /usr/local/bin/director/director \
+RUN mkdir -p /opt/downloads/elexis-base \
+  && unzip -q -d /opt/downloads/elexis-base /opt/downloads/elexis-base.zip \
+  && unzip -q -d /opt/elexis /opt/downloads/elexis-app.zip \
+  && unzip -qu -d /home/ubuntu/elexis /opt/elexis/demo*.zip \
+  && chown -R ubuntu:ubuntu /home/ubuntu \
+  && /usr/local/bin/director/director \
     -destination /opt/elexis \
     -repository file:///opt/downloads/elexis-base/repository \
     -application org.eclipse.equinox.p2.director \
